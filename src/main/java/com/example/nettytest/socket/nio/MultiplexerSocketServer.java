@@ -23,8 +23,6 @@ public class MultiplexerSocketServer implements Runnable {
 
     private volatile boolean stop;
 
-    private int count;
-
 
     public MultiplexerSocketServer(int port) {
         try {
@@ -77,44 +75,40 @@ public class MultiplexerSocketServer implements Runnable {
     }
 
     private void handleInput(SelectionKey key) throws Exception {
-        synchronized (this) {
-            if (key.isValid()) {
-                if (key.isAcceptable()) {
-                    // 接受新的连接
-                    ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
-                    SocketChannel socketChannel = serverSocketChannel.accept();
-                    socketChannel.configureBlocking(false);
-                    // 将新的连接注册到selector上，
-                    socketChannel.register(selector, SelectionKey.OP_READ);
-                }
-                if (key.isReadable()) {
-                    count++;
-                    System.out.println(count);
-                    SocketChannel socketChannel = (SocketChannel) key.channel();
-                    ByteBuffer readBuffer = ByteBuffer.allocate(1024);
-                    int readBytes = socketChannel.read(readBuffer);
-                    if (readBytes > 0) {
-                        readBuffer.flip();
-                        byte[] bytes = new byte[readBuffer.remaining()];
-                        readBuffer.get(bytes);
-                        String body = new String(bytes, "UTF-8");
-                        System.out.println("Server receive message :" + body);
+        if (key.isValid()) {
+            if (key.isAcceptable()) {
+                // 接受新的连接
+                ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
+                SocketChannel socketChannel = serverSocketChannel.accept();
+                socketChannel.configureBlocking(false);
+                // 将新的连接注册到selector上，
+                socketChannel.register(selector, SelectionKey.OP_READ);
+            }
+            if (key.isReadable()) {
+                SocketChannel socketChannel = (SocketChannel) key.channel();
+                ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+                int readBytes = socketChannel.read(readBuffer);
+                if (readBytes > 0) {
+                    readBuffer.flip();
+                    byte[] bytes = new byte[readBuffer.remaining()];
+                    readBuffer.get(bytes);
+                    String body = new String(bytes, "UTF-8");
+                    System.out.println("Server receive message :" + body);
 
-                        String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date().toString() : "BAD QUERY";
-                        doWrite(socketChannel, currentTime);
-                    } else if (readBytes < 0) {
-                        key.cancel();
-                        socketChannel.close();
-                    } else {
-                        // 读取到0字节忽略
-                    }
+                    String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date().toString() : "BAD QUERY";
+                    doWrite(socketChannel, currentTime);
+                } else if (readBytes < 0) {
+                    key.cancel();
+                    socketChannel.close();
+                } else {
+                    // 读取到0字节忽略
                 }
             }
         }
     }
 
     private void doWrite(SocketChannel channel, String response) throws Exception {
-        if (response != null || response.trim().length() > 0) {
+        if (response != null && response.trim().length() > 0) {
             System.out.println("Server answer message : " + response);
             byte[] bytes = response.getBytes();
             ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);

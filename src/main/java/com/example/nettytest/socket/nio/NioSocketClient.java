@@ -10,6 +10,8 @@ public class NioSocketClient {
     public static void main(String[] args) {
         String host = "127.0.0.1";
         int port = 8000;
-        new Thread(new SocketClientHandle(host, port), "NIO-SocketClient-001").start();
+        for (int i = 1; i <= 10000; i++) {
+            new Thread(new NioSocketClientHandler(host, port), "NIO-SocketClient-" + i).start();
+        }
     }
 }

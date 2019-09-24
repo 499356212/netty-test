@@ -9,7 +9,7 @@ public class NioSocketServer {
 
     public static void main(String[] args) {
         int port = 8000;
-        MultiplexerSocketServer server = new MultiplexerSocketServer(port);
+        NioSocketServerHandler server = new NioSocketServerHandler(port);
         new Thread(server, "NIO-MultiplexerSocketServer-001").start();
     }
 

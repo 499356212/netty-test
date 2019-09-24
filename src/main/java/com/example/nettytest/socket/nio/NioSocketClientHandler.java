@@ -4,34 +4,29 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
 /**
- * @Description MultiplexerSocketServer
- * @Date 2019/9/19 16:30:10
+ * @Description TODO
+ * @Date 2019/9/23 09:04:51
  * @Author ljw
  */
-public class MultiplexerSocketServer implements Runnable {
-
+public class NioSocketClientHandler implements Runnable {
+    private String host;
+    private int port;
     private Selector selector;
-
-    private ServerSocketChannel serverSocketChannel;
-
+    private SocketChannel socketChannel;
     private volatile boolean stop;
 
-
-    public MultiplexerSocketServer(int port) {
+    public NioSocketClientHandler(String host, int port) {
+        this.host = host == null ? "127.0.0.1" : host;
+        this.port = port;
         try {
             selector = Selector.open();
-            serverSocketChannel = ServerSocketChannel.open();
-            serverSocketChannel.socket().bind(new InetSocketAddress(port), 1024);
-            serverSocketChannel.configureBlocking(false);
-            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println("NioSocketServer start in port :" + port);
+            socketChannel = SocketChannel.open();
+            socketChannel.configureBlocking(false);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
@@ -40,12 +35,19 @@ public class MultiplexerSocketServer implements Runnable {
 
     @Override
     public void run() {
+        try {
+            doConnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         while (!stop) {
             try {
-                selector.select(1000);
+//                selector.select(1000);
+                selector.select();
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 Iterator<SelectionKey> it = selectionKeys.iterator();
-                SelectionKey key;
+                SelectionKey key = null;
                 while (it.hasNext()) {
                     key = it.next();
                     it.remove();
@@ -62,9 +64,10 @@ public class MultiplexerSocketServer implements Runnable {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
-        // 多路复用器关闭后，所有注册在上面的Channel和Pipe等资源都会被自动去除注册并关闭，所以不需要重复释放资源
+        // 多路复用器关闭后，注册在上面的所有channel和pipe等资源都会被自动去除注册并关闭，所以不需要重复释放资源
         if (selector != null) {
             try {
                 selector.close();
@@ -76,16 +79,17 @@ public class MultiplexerSocketServer implements Runnable {
 
     private void handleInput(SelectionKey key) throws Exception {
         if (key.isValid()) {
-            if (key.isAcceptable()) {
-                // 接受新的连接
-                ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
-                SocketChannel socketChannel = serverSocketChannel.accept();
-                socketChannel.configureBlocking(false);
-                // 将新的连接注册到selector上，
-                socketChannel.register(selector, SelectionKey.OP_READ);
+            SocketChannel socketChannel = (SocketChannel) key.channel();
+            if (key.isConnectable()) {
+                if (socketChannel.finishConnect()) {
+                    socketChannel.register(selector, SelectionKey.OP_READ);
+                    doWrite(socketChannel);
+                } else {
+                    System.out.println("Connect Server failed...");
+                    System.exit(1);
+                }
             }
             if (key.isReadable()) {
-                SocketChannel socketChannel = (SocketChannel) key.channel();
                 ByteBuffer readBuffer = ByteBuffer.allocate(1024);
                 int readBytes = socketChannel.read(readBuffer);
                 if (readBytes > 0) {
@@ -93,28 +97,35 @@ public class MultiplexerSocketServer implements Runnable {
                     byte[] bytes = new byte[readBuffer.remaining()];
                     readBuffer.get(bytes);
                     String body = new String(bytes, "UTF-8");
-                    System.out.println("Server receive message :" + body);
-
-                    String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date().toString() : "BAD QUERY";
-                    doWrite(socketChannel, currentTime);
+                    System.out.println("Now is : " + body);
+                    this.stop = true;
                 } else if (readBytes < 0) {
                     key.cancel();
                     socketChannel.close();
                 } else {
-                    // 读取到0字节忽略
+                    // 读到0字节忽略
                 }
             }
         }
     }
 
-    private void doWrite(SocketChannel channel, String response) throws Exception {
-        if (response != null && response.trim().length() > 0) {
-            System.out.println("Server answer message : " + response);
-            byte[] bytes = response.getBytes();
-            ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
-            writeBuffer.put(bytes);
-            writeBuffer.flip();
-            channel.write(writeBuffer);
+    private void doConnect() throws Exception {
+        if(socketChannel.connect(new InetSocketAddress(host, port))){
+            socketChannel.register(selector, SelectionKey.OP_READ);
+            doWrite(socketChannel);
+        } else {
+            socketChannel.register(selector, SelectionKey.OP_CONNECT);
+        }
+    }
+
+    private void doWrite(SocketChannel socketChannel) throws Exception {
+        byte[] req = "QUERY TIME ORDER".getBytes();
+        ByteBuffer writerBuffer = ByteBuffer.allocate(req.length);
+        writerBuffer.put(req);
+        writerBuffer.flip();
+        socketChannel.write(writerBuffer);
+        if (!writerBuffer.hasRemaining()) {
+            System.out.println("Send order to server successed.");
         }
     }
 }

@@ -1,12 +1,13 @@
 package com.example.nettytest.socket.nio;
 
+import com.example.nettytest.util.DateUtil;
+
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -96,7 +97,7 @@ public class NioSocketServerHandler implements Runnable {
                     String body = new String(bytes, "UTF-8");
                     System.out.println("Server receive message :" + body);
 
-                    String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date().toString() : "BAD QUERY";
+                    String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? DateUtil.now(DateUtil.yyyyMMddHHmmssSSS) : "BAD QUERY";
                     doWrite(socketChannel, currentTime);
                 } else if (readBytes < 0) {
                     key.cancel();

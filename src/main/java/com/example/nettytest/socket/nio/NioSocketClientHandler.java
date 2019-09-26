@@ -83,7 +83,7 @@ public class NioSocketClientHandler implements Runnable {
             if (key.isConnectable()) {
                 if (socketChannel.finishConnect()) {
                     socketChannel.register(selector, SelectionKey.OP_READ);
-                    doWrite(socketChannel);
+                    doWrite(socketChannel, "QUERY TIME ORDER");
                 } else {
                     System.out.println("Connect Server failed...");
                     System.exit(1);
@@ -97,7 +97,7 @@ public class NioSocketClientHandler implements Runnable {
                     byte[] bytes = new byte[readBuffer.remaining()];
                     readBuffer.get(bytes);
                     String body = new String(bytes, "UTF-8");
-                    System.out.println("Now is : " + body);
+                    System.out.println("Client recive message : " + body);
                     this.stop = true;
                 } else if (readBytes < 0) {
                     key.cancel();
@@ -112,20 +112,20 @@ public class NioSocketClientHandler implements Runnable {
     private void doConnect() throws Exception {
         if(socketChannel.connect(new InetSocketAddress(host, port))){
             socketChannel.register(selector, SelectionKey.OP_READ);
-            doWrite(socketChannel);
+            doWrite(socketChannel, "QUERY TIME ORDER");
         } else {
             socketChannel.register(selector, SelectionKey.OP_CONNECT);
         }
     }
 
-    private void doWrite(SocketChannel socketChannel) throws Exception {
-        byte[] req = "QUERY TIME ORDER".getBytes();
+    private void doWrite(SocketChannel socketChannel, String request) throws Exception {
+        byte[] req = request.getBytes();
         ByteBuffer writerBuffer = ByteBuffer.allocate(req.length);
         writerBuffer.put(req);
         writerBuffer.flip();
         socketChannel.write(writerBuffer);
         if (!writerBuffer.hasRemaining()) {
-            System.out.println("Send order to server successed.");
+            System.out.println("Client send message : " + request);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty.DelimiterBasedFrameDecoder;
+package com.example.nettytest.socket.netty.lineBasedFrameDecoder;
 
 import com.example.nettytest.util.DateUtil;
 import io.netty.buffer.ByteBuf;
@@ -20,7 +20,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
         String body = (String) msg;
         System.out.println("Server recive message : " + body + " ; the counter is : " + ++counter);
         String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? DateUtil.now(DateUtil.yyyyMMddHHmmssSSS) : "BAD QUERY";
-        currentTime += "$_";
+        currentTime += System.getProperty("line.separator");
         System.out.println("Server answer message : " + currentTime);
         ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
         ctx.writeAndFlush(resp);

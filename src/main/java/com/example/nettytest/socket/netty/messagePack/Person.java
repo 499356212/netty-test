@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty.MessagePack;
+package com.example.nettytest.socket.netty.messagePack;
 
 public class Person {
 

@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty.MessagePack;
+package com.example.nettytest.socket.netty.lineBasedFrameDecoder;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,9 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
- * @Description NettyServer
+ * @Description NettyServer 使用LineBasedFramedDecoder进行解包
  * @Date 2019/9/27 10:26:17
  * @Author ljw
  */
@@ -34,8 +36,8 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
-                                    .addLast("msgpack decoder", new MsgPackDecoder())
-                                    .addLast("magpack endocer", new MsgPackEncoder())
+                                    .addLast(new LineBasedFrameDecoder(1024))
+                                    .addLast(new StringDecoder())
                                     .addLast(new NettyServerHandler());
                         }
                     });

@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty.LineBasedFrameDecoder;
+package com.example.nettytest.socket.netty.messagePack;
 
 import com.example.nettytest.util.DateUtil;
 import io.netty.buffer.ByteBuf;
@@ -13,17 +13,22 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class NettyServerHandler extends ChannelHandlerAdapter {
 
-    private int counter;
-
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        String body = (String) msg;
-        System.out.println("Server recive message : " + body + " ; the counter is : " + ++counter);
+        ByteBuf buf = (ByteBuf) msg;
+        byte[] req = new byte[buf.readableBytes()];
+        buf.readBytes(req);
+        String body = new String(req, "UTF-8");
+        System.out.println("Server recive message : " + body);
         String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? DateUtil.now(DateUtil.yyyyMMddHHmmssSSS) : "BAD QUERY";
-        currentTime += System.getProperty("line.separator");
         System.out.println("Server answer message : " + currentTime);
         ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
-        ctx.writeAndFlush(resp);
+        ctx.write(resp);
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.flush();
     }
 
     @Override

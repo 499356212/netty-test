@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @Description TODO
- * @Date 2019/9/26 09:54:06
- * @Author ljw
+ * DateUtil
+ *
+ * @author ljw
+ * @since 2019/9/26 09:54:06
  */
 public class DateUtil {
 

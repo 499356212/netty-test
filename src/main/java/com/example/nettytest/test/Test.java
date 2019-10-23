@@ -1,9 +1,10 @@
 package com.example.nettytest.test;
 
 /**
- * @Description TODO
- * @Date 2019/9/3 10:12:38
- * @Author ljw
+ * Test
+ *
+ * @author ljw
+ * @since 2019/9/3 10:12:38
  */
 public class Test {
     public static void main(String[] args){

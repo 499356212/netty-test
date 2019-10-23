@@ -7,9 +7,10 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 
 /**
- * @Description TODO
- * @Date 2019/9/24 17:20:03
- * @Author ljw
+ * ReadCompletionHandler
+ *
+ * @author ljw
+ * @since 2019/9/24 17:20:03
  */
 public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuffer> {
 

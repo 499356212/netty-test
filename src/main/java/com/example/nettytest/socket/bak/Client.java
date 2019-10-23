@@ -5,9 +5,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * @Description TODO
- * @Date 2019/9/16 17:16:33
- * @Author ljw
+ * Client
+ *
+ * @author ljw
+ * @since 2019/9/16 17:16:33
  */
 public class Client {
     public static void main(String[] args) {

@@ -14,9 +14,10 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
- * @Description NettyServer 使用LineBasedFramedDecoder进行解包
- * @Date 2019/9/27 10:26:17
- * @Author ljw
+ * NettyServer 使用LineBasedFramedDecoder进行解包
+ *
+ * @author ljw
+ * @since 2019/9/27 10:26:17
  */
 public class NettyServer {
 

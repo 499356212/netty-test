@@ -12,9 +12,10 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
- * @Description NettyClient
- * @Date 2019/9/27 11:38:02
- * @Author ljw
+ * NettyClient
+ *
+ * @author ljw
+ * @since 2019/9/27 11:38:02
  */
 public class NettyClient {
 

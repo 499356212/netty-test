@@ -7,9 +7,10 @@ import java.nio.channels.CompletionHandler;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @Description AioSocketClientHandler
- * @Date 2019/9/24 17:56:48
- * @Author ljw
+ * AioSocketClientHandler
+ *
+ * @author ljw
+ * @since 2019/9/24 17:56:48
  */
 public class AioSocketClientHandler implements Runnable, CompletionHandler<Void, AioSocketClientHandler> {
 

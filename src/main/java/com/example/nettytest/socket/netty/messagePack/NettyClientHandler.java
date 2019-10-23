@@ -5,9 +5,10 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * @Description NettyClientHandler
- * @Date 2019/9/27 13:51:29
- * @Author ljw
+ * NettyClientHandler
+ *
+ * @author ljw
+ * @since 2019/9/27 13:51:29
  */
 public class NettyClientHandler extends ChannelHandlerAdapter {
     private final int sendNumber;

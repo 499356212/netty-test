@@ -1,9 +1,10 @@
 package com.example.nettytest.socket.aio;
 
 /**
- * @Description AioSocketServer
- * @Date 2019/9/24 15:57:15
- * @Author ljw
+ * AioSocketServer
+ *
+ * @author ljw
+ * @since 2019/9/24 15:57:15
  */
 public class AioSocketServer {
 

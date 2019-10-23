@@ -9,9 +9,10 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 /**
- * @Description 服务端Socketc处理线程
- * @Date 2019/9/18 17:17:28
- * @Author ljw
+ * 服务端Socketc处理线程
+ *
+ * @author ljw
+ * @since 2019/9/18 17:17:28
  */
 public class ClientHandler implements Runnable {
 

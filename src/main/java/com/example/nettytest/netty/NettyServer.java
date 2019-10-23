@@ -12,9 +12,10 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.AttributeKey;
 
 /**
- * @Description NettyServer
- * @Date 2019/9/2 09:48:41
- * @Author ljw
+ * NettyServer
+ *
+ * @author ljw
+ * @since 2019/9/2 09:48:41
  */
 public class NettyServer {
 

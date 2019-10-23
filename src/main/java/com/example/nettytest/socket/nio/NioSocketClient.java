@@ -1,9 +1,10 @@
 package com.example.nettytest.socket.nio;
 
 /**
- * @Description TODO
- * @Date 2019/9/23 09:03:27
- * @Author ljw
+ * NioSocketClient
+ *
+ * @author ljw
+ * @since 2019/9/23 09:03:27
  */
 public class NioSocketClient {
 

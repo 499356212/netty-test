@@ -12,9 +12,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * @Description MultiplexerSocketServer
- * @Date 2019/9/19 16:30:10
- * @Author ljw
+ * MultiplexerSocketServer
+ *
+ * @author ljw
+ * @since 2019/9/19 16:30:10
  */
 public class NioSocketServerHandler implements Runnable {
 

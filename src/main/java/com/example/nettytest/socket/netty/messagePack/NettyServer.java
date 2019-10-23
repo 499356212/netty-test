@@ -8,11 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 /**
- * @Description NettyServer
- * @Date 2019/9/27 10:26:17
- * @Author ljw
+ * NettyServer
+ *
+ * @author ljw
+ * @since 2019/9/27 10:26:17
  */
 public class NettyServer {
 
@@ -34,7 +37,9 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
+                                    .addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2))
                                     .addLast("msgpack decoder", new MsgPackDecoder())
+                                    .addLast("frameEncoder", new LengthFieldPrepender(2))
                                     .addLast("magpack endocer", new MsgPackEncoder())
                                     .addLast(new NettyServerHandler());
                         }

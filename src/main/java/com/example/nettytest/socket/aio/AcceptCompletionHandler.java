@@ -5,9 +5,10 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 
 /**
- * @Description TODO
- * @Date 2019/9/24 16:59:33
- * @Author ljw
+ * AcceptCompletionHandler
+ *
+ * @author ljw
+ * @since 2019/9/24 16:59:33
  */
 public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, AioSocketServerHandler>  {
     @Override

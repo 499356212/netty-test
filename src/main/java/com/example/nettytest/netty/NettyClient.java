@@ -10,9 +10,10 @@ import io.netty.handler.codec.string.StringDecoder;
 import java.util.Date;
 
 /**
- * @Description TODO
- * @Date 2019/9/2 09:48:49
- * @Author ljw
+ * NettyClient
+ *
+ * @author ljw
+ * @since 2019/9/2 09:48:49
  */
 public class NettyClient {
 

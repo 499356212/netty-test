@@ -5,9 +5,10 @@ import java.nio.channels.AsynchronousServerSocketChannel;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @Description AioSocketServerHandler
- * @Date 2019/9/24 16:01:51
- * @Author ljw
+ * AioSocketServerHandler
+ *
+ * @author ljw
+ * @since 2019/9/24 16:01:51
  */
 public class AioSocketServerHandler implements Runnable {
 

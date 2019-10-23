@@ -9,9 +9,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * @Description TODO
- * @Date 2019/9/23 09:04:51
- * @Author ljw
+ * NioSocketClientHandler
+ *
+ * @since 2019/9/23 09:04:51
+ * @author ljw
  */
 public class NioSocketClientHandler implements Runnable {
     private String host;

@@ -7,9 +7,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description SocketServer
- * @Date 2019/9/16 13:59:28
- * @Author ljw
+ * SocketServer
+ *
+ * @author ljw
+ * @since 2019/9/16 13:59:28
  */
 public class SocketServer{
 

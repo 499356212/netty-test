@@ -7,9 +7,10 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 /**
- * @Description SocketClient
- * @Date 2019/9/16 14:38:31
- * @Author ljw
+ * SocketClient
+ *
+ * @author ljw
+ * @since 2019/9/16 14:38:31
  */
 public class SocketClient{
 

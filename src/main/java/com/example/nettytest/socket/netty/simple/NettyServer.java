@@ -10,9 +10,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
- * @Description NettyServer
- * @Date 2019/9/27 10:26:17
- * @Author ljw
+ * NettyServer
+ *
+ * @author ljw
+ * @since 2019/9/27 10:26:17
  */
 public class NettyServer {
 

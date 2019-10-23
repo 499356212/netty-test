@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty;
+package com.example.nettytest.socket.netty.simple;
 
 import com.example.nettytest.util.DateUtil;
 import io.netty.buffer.ByteBuf;

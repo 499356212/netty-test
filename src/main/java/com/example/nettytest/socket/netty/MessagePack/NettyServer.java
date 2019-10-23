@@ -1,6 +1,5 @@
 package com.example.nettytest.socket.netty.MessagePack;
 
-import com.example.nettytest.socket.netty.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

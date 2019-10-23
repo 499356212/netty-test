@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty_LineBasedFrameDecoder;
+package com.example.nettytest.socket.netty.LineBasedFrameDecoder;
 
 import com.example.nettytest.util.DateUtil;
 import io.netty.buffer.ByteBuf;

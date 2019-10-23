@@ -1,4 +1,4 @@
-package com.example.nettytest.socket.netty_DelimiterBasedFrameDecoder;
+package com.example.nettytest.socket.netty.LineBasedFrameDecoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -16,7 +16,7 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        String requesetStr = "QUERY TIME ORDER" + "$_";
+        String requesetStr = "QUERY TIME ORDER" + System.getProperty("line.separator");
         byte[] req = requesetStr.getBytes();
         for(int i = 0; i < 100; i++){
             System.out.println("Client send message : " + requesetStr);

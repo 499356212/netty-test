@@ -1,5 +1,8 @@
 package com.example.nettytest.socket.netty.messagePack;
 
+import org.msgpack.annotation.Message;
+
+@Message
 public class Person {
 
     private String name;

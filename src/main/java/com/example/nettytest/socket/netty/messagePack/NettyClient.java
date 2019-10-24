@@ -8,6 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 /**
  * NettyClient
@@ -30,11 +32,14 @@ public class NettyClient {
             bootstrap.group(worker)
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.TCP_NODELAY, true)
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
+                                    .addLast("frameDecooder", new LengthFieldBasedFrameDecoder(65535, 0,2,0,2))
                                     .addLast("msgpack decoder", new MsgPackDecoder())
+                                    .addLast("frameEncoder", new LengthFieldPrepender(2))
                                     .addLast("msgpack encoder", new MsgPackEncoder())
                                     .addLast(new NettyClientHandler(1000));
                         }

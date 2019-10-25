@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.runoob.com" xmlns="http://www.runoob.com">
+    <xs:element name="project" type="Model">
+        <xs:annotation>
+            <xs:documentation source="version">3.0.0+</xs:documentation>
+            <xs:documentation source="description">
+                The &lt;code&gt;&amp;lt;project&amp;gt;&lt;code&gt; element is the root of the descriptor.
+                The following table lists all of the possible child elements.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="Model">
+        <xs:annotation>
+            <xs:documentation source="version">3.0.0+</xs:documentation>
+            <xs:documentation source="description">
+                The &lt;code&gt;&amp;lt;project&amp;gt;&lt;code&gt; element is the root of the descriptor.
+                The following table lists all of the possible child elements.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="groupId" minOccurs="0" type="xs:string"/>
+            <xs:element name="artifactId" minOccurs="0" type="xs:string"/>
+            <xs:element name="moudleVersion" minOccurs="0" type="xs:string"/>
+            <xs:element name="packaging" minOccurs="0" type="xs:string" default="jar"/>
+            <xs:element name="name" minOccurs="0" type="xs:string"/>
+            <xs:element name="version" minOccurs="0" type="xs:string"/>
+            <xs:element name="description" minOccurs="0" type="xs:string"/>
+            <xs:element name="url" minOccurs="0" type="xs:string"/>
+            <xs:element name="description" minOccurs="0" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="persionInfo">
+        <xs:all>
+            <xs:element name="firstName" minOccurs="0" type="xs:string"/>
+            <xs:element name="lastName" minOccurs="0" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+    <xs:complexType name="fullPersionInfo">
+        <xs:complexContent>
+            <xs:extension base="persionInfo">
+                <xs:all>
+                    <xs:element name="country" type="xs:string" default="cn"/>
+                    <xs:element name="city" type="xs:string"/>
+                    <xs:element name="address" type="xs:string"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

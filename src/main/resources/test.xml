@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://www.runoob.com"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.runoob.com test.xsd">
+    <moudleVersion>4.0.0</moudleVersion>
+    <groupId>com.test</groupId>
+    <artifactId>netty-test</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <
+</project>
